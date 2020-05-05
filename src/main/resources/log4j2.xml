@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true" name="XMLConfigTest"
+               monitorInterval="300"
+               packages="org.apache.logging.log4j">
+    <Properties>
+        <Property name="filename">logs/spiders.log</Property>
+        <Property name="pattern">%d{DEFAULT} %-5level %logger{1}:%L - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+        <RollingFile name="rolling-file" fileName="${filename}" filePattern="logs/towards-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <Strategy maxFiles="10" compressionLevel="0"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="rolling-file"/>
+        </Root>
+
+        <Logger name="com.mongodb" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="rolling-file"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
