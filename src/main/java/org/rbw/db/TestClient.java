@@ -29,20 +29,19 @@ public class TestClient {
     public static void main(String[] args) {
         TestClient cli = new TestClient();
 
-        /*Map<String, Object> map = new HashMap<>();
-        map.put("id", 3);
-        map.put("name", "allen");
-        map.put("age", 25);
-        map.put("gender", "male");*/
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "JFK");
+        map.put("age", 38);
+        map.put("gender", "male");
 
-        People p = new People();
+        /*People p = new People();
         p.setId(5);
         p.setName("eva");
         p.setAge(17);
-        p.setGender("female");
+        p.setGender("female");*/
 
-        // cli.insertOne(p);
-        System.out.println(cli.listAll("e"));
+        cli.insertOne(map);
+        // System.out.println(cli.listAll("e"));
 
 
     }
@@ -104,6 +103,22 @@ public class TestClient {
             }};
 
             return mapper.listAll(map);
+        }
+    }
+
+    /**
+     * according to the result the pk auto increase is based in the max id
+     * and if use map as the param,
+     * each key must be the same wit the <b>#{}<b/> inside val
+     * @param row map
+     */
+    private void insertOne(Map<String, Object> row) {
+        try (SqlSession session = getSqlSessionFactory().openSession()) {
+            PeopleMapper mapper = session.getMapper(PeopleMapper.class);
+            mapper.inertOneWithMap(row);
+            System.out.println("what the fuck");
+            // int i = 5 / 0; // in order to test transaction is worked
+            session.commit();
         }
     }
 

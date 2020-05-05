@@ -20,4 +20,11 @@ public interface PeopleMapper {
     @Insert("insert into t_people values (#{id}, #{name}, #{age}, #{gender})")
     void inertOne(People row);
 
+    /**
+     * test map param and test if the db pk can increase automatic
+     * @param row map
+     */
+    @Insert("Insert into t_people (name, age, gender) values (#{name},#{age}, #{gender})")
+    void inertOneWithMap(Map<String, Object> row);
+
 }
