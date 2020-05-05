@@ -11,8 +11,8 @@ import java.util.Map;
  */
 public interface PeopleMapper {
 
-    @Select("")
-    List<Map<String, Object>> listAll();
+    @Select("select * from t_people where name like '%${subName}%'")
+    List<Map<String, Object>> listAll(Map<String, String> param);
 
     @Select("Select * from t_people where id = #{id}")
     Map<String, Object> queryById(int id);

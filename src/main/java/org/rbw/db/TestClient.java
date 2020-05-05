@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,7 +41,10 @@ public class TestClient {
         p.setAge(17);
         p.setGender("female");
 
-        cli.insertOne(p);
+        // cli.insertOne(p);
+        System.out.println(cli.listAll("e"));
+
+
     }
 
     /**
@@ -87,6 +92,18 @@ public class TestClient {
             System.out.println("what the fuck");
             // int i = 5 / 0; // in order to test transaction is worked
             session.commit();
+        }
+    }
+
+    private List<Map<String, Object>> listAll(final String query) {
+        try (SqlSession session = getSqlSessionFactory().openSession()) {
+            PeopleMapper mapper = session.getMapper(PeopleMapper.class);
+
+            HashMap<String, String> map = new HashMap<>() {{
+                put("subName", query);
+            }};
+
+            return mapper.listAll(map);
         }
     }
 
