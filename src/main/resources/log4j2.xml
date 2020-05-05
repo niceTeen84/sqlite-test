@@ -30,6 +30,11 @@
             <AppenderRef ref="console"/>
             <AppenderRef ref="rolling-file"/>
         </Logger>
+
+        <Logger name="org.rbw.db" additivity="false" level = "debug"> <!-- <==== define the log level for your own mapper -->
+            <AppenderRef ref="console"/>
+        </Logger>
+
     </Loggers>
 
 </Configuration>
